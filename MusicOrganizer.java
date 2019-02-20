@@ -1,4 +1,6 @@
 import java.util.ArrayList;
+import java.util.Random;
+
 
 /**
  * A class to hold details of audio tracks.
@@ -14,7 +16,12 @@ public class MusicOrganizer
     // A player for the music tracks.
     private MusicPlayer player;
     // A reader that can read music files and load them as tracks.
-    private TrackReader reader;
+    private TrackReader reader;     
+    // the index number of the track picked by java.util.random.
+    private int randTrack;
+    
+    private Random ran;
+   
 
     /**
      * Create a MusicOrganizer
@@ -24,11 +31,12 @@ public class MusicOrganizer
         tracks = new ArrayList<>();
         player = new MusicPlayer();
         reader = new TrackReader();
+        ran = new Random();
         readLibrary("../audio");
         System.out.println("Music library loaded. " + getNumberOfTracks() + " tracks.");
         System.out.println();
-    }
-    
+    }   
+        
     /**
      * Add a track file to the collection.
      * @param filename The file name of the track to be added.
@@ -56,8 +64,44 @@ public class MusicOrganizer
         if(indexValid(index)) {
             Track track = tracks.get(index);
             player.startPlaying(track.getFilename());
-            System.out.println("Now playing: " + track.getArtist() + " - " + track.getTitle());
+            System.out.println("Now playing: " + track.getArtist() + 
+            " - " + track.getTitle());
         }
+    }
+    
+     /** 
+     * Plays a random track
+     */
+    public void shuffle()
+    {
+        int randTrack = ran.nextInt(tracks.size());
+        // TODO add protection so someone cant mash shuffle and play several
+        //songs on top of eachother.
+        if(indexValid(randTrack)) {
+            Track track = tracks.get(randTrack);
+            player.startPlaying(track.getFilename());
+            System.out.println("Now playing: " + track.getArtist() +
+            " - " + track.getTitle());
+        }
+    }
+    
+    /**
+     *  plays all tracks in random order.
+     */    
+    public void linearshuffle()
+    {
+        
+    }
+    
+    /**
+     * a code slice used to test the implementation of the shuffle feature
+     * should be set to private before final commit.
+     */
+    public int numberTest()
+    {
+        int randTrack = ran.nextInt(tracks.size());
+        
+        return randTrack;
     }
     
     /**
