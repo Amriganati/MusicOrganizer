@@ -59,7 +59,7 @@ public class MusicPlayer
                 public void run()
                 {
                     try {
-                        player.play(5000);
+                        player.play(9000);
                     }
                     catch(JavaLayerException e) {
                         reportProblem(filename);
