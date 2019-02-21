@@ -13,16 +13,20 @@ public class MusicOrganizer
 {
     // An ArrayList for storing music tracks.
     private ArrayList<Track> tracks;
+    
+    //private ArrayList<Track> sideB;
     // A player for the music tracks.
     private MusicPlayer player;
     // A reader that can read music files and load them as tracks.
     private TrackReader reader;     
     // the index number of the track picked by java.util.random.
     private int randTrack;
-    
+    // acts as a reference hook for the random feature of java.util.random
     private Random ran;
-   
-
+    // boolean determines whether the copy of the tracks arraylist (sideB) has been shuffled for the shufflenorepeat feature.
+    private boolean isShuffled;
+    
+    private int trackcount;
     /**
      * Create a MusicOrganizer
      */
@@ -32,11 +36,22 @@ public class MusicOrganizer
         player = new MusicPlayer();
         reader = new TrackReader();
         ran = new Random();
+        //isShuffled = false;
         readLibrary("../audio");
         System.out.println("Music library loaded. " + getNumberOfTracks() + " tracks.");
         System.out.println();
+        //ShuffleInit();
+        trackcount = tracks.size();
     }   
         
+    private void ShuffleInit()
+    {
+       ArrayList sideB = (ArrayList) tracks.clone();
+       if(isShuffled = false){
+                Collections.shuffle(sideB);
+                isShuffled = true;
+            }
+    }
     /**
      * Add a track file to the collection.
      * @param filename The file name of the track to be added.
@@ -72,7 +87,7 @@ public class MusicOrganizer
      /** 
      * Plays a random track
      */
-    public void shuffle()
+    public void shuffleP()
     {
         int randTrack = ran.nextInt(tracks.size());
         // TODO add protection so someone cant mash shuffle and play several
@@ -88,16 +103,25 @@ public class MusicOrganizer
     /**
      *  plays all tracks in random order.
      */    
-    public void linearshuffle()
+    public void shufflenoRepeat()
     {
-        
+           int randTrack = ran.nextInt(tracks.size());
+        // TODO add protection so someone cant mash shuffle and play several
+        //songs on top of eachother.
+        if(indexValid(randTrack)) {
+            Track track = tracks.get(randTrack);
+            player.startPlaying(track.getFilename());
+            System.out.println("Now playing: " + track.getArtist() +
+            " - " + track.getTitle());
+            tracks.remove(randTrack);
+        }
     }
     
     /**
      * a code slice used to test the implementation of the shuffle feature
      * should be set to private before final commit.
      */
-    public int numberTest()
+    private int numberTest()
     {
         int randTrack = ran.nextInt(tracks.size());
         
