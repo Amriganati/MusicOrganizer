@@ -36,21 +36,25 @@ public class MusicOrganizer
         player = new MusicPlayer();
         reader = new TrackReader();
         ran = new Random();
-        //isShuffled = false;
+        isShuffled = false;
         readLibrary("../audio");
         System.out.println("Music library loaded. " + getNumberOfTracks() + " tracks.");
         System.out.println();
         //ShuffleInit();
-        trackcount = tracks.size();
+        trackcount = 0;
     }   
         
     private void ShuffleInit()
     {
-       ArrayList sideB = (ArrayList) tracks.clone();
-       if(isShuffled = false){
-                Collections.shuffle(sideB);
-                isShuffled = true;
-            }
+       if(trackcount == tracks.size())
+       {
+           trackcount = 0;
+           isShuffled = false;
+       }
+    }
+    public void shuffletest()
+    {
+        Collections.shuffle(tracks);
     }
     /**
      * Add a track file to the collection.
@@ -105,18 +109,29 @@ public class MusicOrganizer
      */    
     public void shufflenoRepeat()
     {
-           int randTrack = ran.nextInt(tracks.size());
-        // TODO add protection so someone cant mash shuffle and play several
-        //songs on top of eachother.
-        if(indexValid(randTrack)) {
-            Track track = tracks.get(randTrack);
+        if(isShuffled == false){
+                Collections.shuffle(tracks);
+                isShuffled = true;
+            }
+        repeatplay();
+        
+    }
+    private void repeatplay()
+    {
+        if(indexValid(trackcount)) {
+            Track track = tracks.get(trackcount);
             player.startPlaying(track.getFilename());
             System.out.println("Now playing: " + track.getArtist() +
             " - " + track.getTitle());
-            tracks.remove(randTrack);
+            trackcount++;
+            ShuffleInit();
         }
     }
-    
+    private int countcheckula()
+    {
+        //because im not sure if anything is working/bork at this point
+        return trackcount;
+    }
     /**
      * a code slice used to test the implementation of the shuffle feature
      * should be set to private before final commit.
