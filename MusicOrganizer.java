@@ -110,6 +110,7 @@ public class MusicOrganizer
      *  plays all tracks in a random order by shuffeing the order of the 
      *  tracks and then increments the index number
      *  by one after each play (reapeat play)
+     *  shuffling is done via the java.util.collections lib
      */    
     public void shufflenoRepeat()
     {
