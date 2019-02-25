@@ -23,9 +23,9 @@ public class MusicOrganizer
     private int randTrack;
     // acts as a reference hook for the random feature of java.util.random
     private Random ran;
-    // boolean determines whether the copy of the tracks arraylist (sideB) has been shuffled for the shufflenorepeat feature.
+    // boolean determines whether track list has been/needs to be shuffled
     private boolean isShuffled;
-    
+    // starts at zero and increments up to the maximum of the track array list every time a song is played, then triggers the list to shuffle again
     private int trackcount;
     /**
      * Create a MusicOrganizer
@@ -43,7 +43,9 @@ public class MusicOrganizer
         //ShuffleInit();
         trackcount = 0;
     }   
-        
+        /**
+         * When it's conditions are met, primes the shufflenoreapeat method to shuffle and run the track list again
+         */
     private void ShuffleInit()
     {
        if(trackcount == tracks.size())
@@ -52,7 +54,7 @@ public class MusicOrganizer
            isShuffled = false;
        }
     }
-    public void shuffletest()
+    private void shuffletest()
     {
         Collections.shuffle(tracks);
     }
@@ -105,7 +107,9 @@ public class MusicOrganizer
     }
     
     /**
-     *  plays all tracks in random order.
+     *  plays all tracks in a random order by shuffeing the order of the 
+     *  tracks and then increments the index number
+     *  by one after each play (reapeat play)
      */    
     public void shufflenoRepeat()
     {
@@ -116,6 +120,7 @@ public class MusicOrganizer
         repeatplay();
         
     }
+    
     private void repeatplay()
     {
         if(indexValid(trackcount)) {
